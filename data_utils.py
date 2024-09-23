@@ -88,7 +88,7 @@ def cleanup_data(df):
                      'position': 'result'}
     df.rename(columns=column_rename, inplace=True)
     df['start_position'].fillna(value=10, inplace=True)
-    df.replace('\\N', np.NaN, inplace=True)
+    df.replace('\\N', np.nan, inplace=True)
     df['result'] = pd.to_numeric(df['result'], errors='coerce')
     df['start_position'] = pd.to_numeric(df['start_position'], errors='coerce')
     df.dropna(subset=['result'], inplace=True)
