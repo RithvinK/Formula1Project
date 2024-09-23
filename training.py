@@ -163,22 +163,23 @@ def number_to_ordinal(n):
     return f"{n}{suffix}"
 
 
-def create_upcoming_race_data_for_positions():
+def create_upcoming_race_data_for_positions(driver_name='Carlos Sainz', circuit='Losail International Circuit'):
+    """Create data for predicting race outcomes based on different starting positions."""
     data = {
         'start_position': list(range(1, 23)),  # Starting positions from 1 to 22
         'year': [2023] * 22,
         'month': [10] * 22,
         'day': [8] * 22,
-        'circuit': ['Losail International Circuit'] * 22,
-        'name': ['Carlos Sainz'] * 22,
-        'constructor': ['Ferrari'] * 22
+        'circuit': [circuit] * 22,  # Use the input circuit
+        'name': [driver_name] * 22,  # Use the input driver name
+        'constructor': ['Ferrari'] * 22  # You can parameterize this too if needed
     }
 
     return pd.DataFrame(data)
 
 
-def create_and_show_predictions(predictor, scalers, encoder):
-    upcoming_race_data = create_upcoming_race_data_for_positions()
+def create_and_show_predictions(predictor, scalers, encoder, driver_name, circuit_name):
+    upcoming_race_data = create_upcoming_race_data_for_positions(driver_name, circuit_name)
     race_predictions = predict_upcoming_races(predictor, upcoming_race_data,
                                               scalers, encoder)
     for i, prediction_tensor in enumerate(race_predictions):
@@ -228,7 +229,7 @@ def main():
 
     show_training_and_validation_loss_graph(training_losses, validation_losses)
 
-    create_and_show_predictions(predictor, scalers, encoder)
+    create_and_show_predictions(predictor, scalers, encoder, 'Fernando Alonso', "Baku City Circuit")
 
 
 if __name__ == "__main__":
